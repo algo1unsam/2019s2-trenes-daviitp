@@ -1,0 +1,145 @@
+import trenes.*
+
+describe "Trenes" {
+	
+	var formacion
+	var formacion2
+	var formacion3
+	var vagonDeCarga1
+	var vagonDeCarga2
+	var vagonDeCarga3
+	var vagonDeCarga4
+	var vagonDeCarga5
+	var vagonDeCarga6
+	var vagonDePasajeros1
+	var vagonDePasajeros2
+	var vagonDePasajeros3
+	var vagonDePasajeros4
+	var vagonDePasajeros5
+	var vagonDePasajeros6
+	var locomotora1
+	var locomotora2
+	
+	fixture {
+		
+		formacion = new Formacion()
+		formacion2 = new Formacion()
+		formacion3 = new Formacion()
+		vagonDeCarga1 = new VagonDeCarga()
+		vagonDeCarga2 = new VagonDeCarga()
+		vagonDeCarga3 = new VagonDeCarga()
+		vagonDeCarga4 = new VagonDeCarga()
+		vagonDeCarga5 = new VagonDeCarga()
+		vagonDeCarga6 = new VagonDeCarga()
+		vagonDePasajeros1 = new VagonDePasajeros()
+		vagonDePasajeros2 = new VagonDePasajeros()
+		vagonDePasajeros3 = new VagonDePasajeros()
+		vagonDePasajeros4 = new VagonDePasajeros()
+		vagonDePasajeros5 = new VagonDePasajeros()
+		vagonDePasajeros6 = new VagonDePasajeros()
+		formacion = new Formacion()
+		locomotora1 = new Locomotora()
+		locomotora2 = new Locomotora()
+	}
+	
+	test "Cuántos vagones livianos hay en una formación" {
+		
+		formacion.vagonesDeCarga().add(vagonDeCarga1)
+		formacion.vagonesDeCarga().add(vagonDeCarga2)
+		formacion.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+	
+		vagonDePasajeros1.pasajerosTransportados(20)
+		vagonDePasajeros2.pasajerosTransportados(40)
+		vagonDeCarga1.cargaTransportada(2000)
+		vagonDeCarga2.cargaTransportada(2500)
+	
+		assert.equals(2,formacion.vagonesLivianos())
+	}
+
+	test "Velocidad mínima de una formación" {
+	
+		locomotora1.velocidadMaxima(80) 
+		locomotora2.velocidadMaxima(70)
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)
+	
+		assert.equals(70,formacion.velocidadMaxima())
+	}
+
+	test "Eficiencia" {
+
+		locomotora1.peso(1000)
+		locomotora2.peso(1500)
+		locomotora1.pesoMaximoQueArrastra(5000)
+		locomotora2.pesoMaximoQueArrastra(7500)	
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)	
+	
+		assert.that(formacion.esEficiente())
+		
+		locomotora1.peso(1000)
+		locomotora2.peso(1500)
+		locomotora1.pesoMaximoQueArrastra(5000)
+		locomotora2.pesoMaximoQueArrastra(5000)
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)
+		
+		assert.notThat(formacion.esEficiente())
+	}
+
+	test "Formación puede moverse" {
+		
+		locomotora1.peso(1000)
+		locomotora2.peso(1500)
+		locomotora1.pesoMaximoQueArrastra(5000)
+		locomotora2.pesoMaximoQueArrastra(7500)
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)
+		formacion.vagonesDeCarga().add(vagonDeCarga1)
+		formacion.vagonesDeCarga().add(vagonDeCarga2)
+		formacion.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+		vagonDeCarga1.cargaMaxima(2000)
+		vagonDeCarga2.cargaMaxima(3000)
+		vagonDePasajeros1.ancho(2)
+		vagonDePasajeros2.ancho(3)
+		vagonDePasajeros1.largo(10)
+		vagonDePasajeros2.largo(10)
+		vagonDePasajeros1.pasajerosTransportados(20)
+		vagonDePasajeros2.pasajerosTransportados(50)
+		
+		//El peso que arrastra la formación es de 22220
+				
+		assert.notThat(formacion.puedeMoverse())
+	}
+	
+	test "Cuántos kilos de empuje faltan" {
+		
+		locomotora1.peso(1000)
+		locomotora2.peso(1500)
+		locomotora1.pesoMaximoQueArrastra(5000)
+		locomotora2.pesoMaximoQueArrastra(7500)
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)
+		formacion.vagonesDeCarga().add(vagonDeCarga1)
+		formacion.vagonesDeCarga().add(vagonDeCarga2)
+		formacion.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+		vagonDeCarga1.cargaMaxima(2000)
+		vagonDeCarga2.cargaMaxima(3000)
+		vagonDePasajeros1.ancho(2)
+		vagonDePasajeros2.ancho(3)
+		vagonDePasajeros1.largo(10)
+		vagonDePasajeros2.largo(10)
+		vagonDePasajeros1.pasajerosTransportados(20)
+		vagonDePasajeros2.pasajerosTransportados(50)
+				
+		//El peso que arrastra la formación es de 22220
+		
+		assert.equals(9720,formacion.cuantoEmpujeFalta())
+	}
+
+	
+
+} //Fin describe
