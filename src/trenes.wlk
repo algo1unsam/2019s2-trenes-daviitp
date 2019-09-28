@@ -1,10 +1,24 @@
-object deposito {
+class Deposito {
 	
 	const property formaciones = []
+	const property locomotorasSueltas = []
 	
-	method vagonMasPesado() {
-		return formaciones.filter({formacion=>formacion.vagonMasPesado()})
+	method vagonesMasPesados() {return formaciones.map({formacion => formacion.vagonesTotales().max({vagon => vagon.peso()} )})}
+	method necesitaConductorExperimentado() {return formaciones.any({formacion=>formacion.esCompleja()})}
+	
+	method cuantoEmpujeFalta(formacion) {return formacion.cuantoEmpujeFalta()}
+	
+	method agregarLocomotora(formacion) {
+		if (self.cuantoEmpujeFalta(formacion) > 0) {
+			formacion.add(self.locomotoraConEmpuje(formacion))
+		}
 	}
+	
+	method locomotoraConEmpuje(formacion) {
+		return locomotorasSueltas.filter({locomotora=>locomotora.arrastreUtil() > formacion.cuantoEmpujeFalta()}).first()
+	}
+	
+	
 }
 
 class Formacion {
@@ -12,37 +26,44 @@ class Formacion {
 	const property vagonesDeCarga = []
 	const property vagonesDePasajeros = []
 	const property locomotoras = []	
+
 	
 	method velocidadMaxima() {return locomotoras.min({locomotora=>locomotora.velocidadMaxima()}).velocidadMaxima()}
 	
-	method vagonMasPesadoDeCarga() {return vagonesDeCarga.max({vagon=>vagon.peso()})}
-	method vagonMasPesadoDePasajeros() {return vagonesDeCarga.max({vagon=>vagon.peso()})}
+	//method vagonMasPesado() {return (vagonesDeCarga + vagonesDePasajeros).max({vagon=>vagon.peso()}).asList()}
+	method vagonesTotales() {return vagonesDeCarga + vagonesDePasajeros}
 	
-	method vagonMasPesado() {}
-
 	method vagonesLivianosDeCarga() {return vagonesDeCarga.count({vagon=>vagon.peso() < 2500})}
 	method vagonesLivianosDePasajeros() {return vagonesDePasajeros.count({vagon=>vagon.peso() < 2500})}
 	
 	method vagonesLivianos() {return self.vagonesLivianosDeCarga() + self.vagonesLivianosDePasajeros()}
 	
-	method esEficiente() {return locomotoras.all({locomotora=>locomotora.esEficiente()})}
+	method esEficiente() {return self.locomotoras().all({locomotora=>locomotora.esEficiente()})}
 	
 	method pesoMaximoVagonesDeCarga() {return vagonesDeCarga.sum({vagon=>vagon.pesoMaximo()})}
 	method pesoMaximoVagonesDePasajeros() {return vagonesDePasajeros.sum({vagon=>vagon.pesoMaximo()})}	
 	
 	method pesoMaximoVagones() {return self.pesoMaximoVagonesDeCarga() + self.pesoMaximoVagonesDePasajeros()}
 	
-	method arrastreUtilTotal() {return locomotoras.sum({locomotora=>locomotora.arrastreUtil()})}
+	method arrastreUtilTotal() {return self.locomotoras().sum({locomotora=>locomotora.arrastreUtil()})}
 	
 	method puedeMoverse() {return self.arrastreUtilTotal() >= self.pesoMaximoVagones()}
 	
 	method cuantoEmpujeFalta() {if (self.puedeMoverse()) return 0 else return (self.pesoMaximoVagones() - self.arrastreUtilTotal())}
 	
-	method cantidadLocomotoras() {return locomotoras.lenght()}
-	method cantidadVagonesCarga() {return vagonesDeCarga.lenght()}
-	method cantidadVagonesPasajeros() {return vagonesDePasajeros.lenght()}
+	method cantidadLocomotoras() {return self.locomotoras().size()}
+	method cantidadVagonesCarga() {return self.vagonesDeCarga().size()}
+	method cantidadVagonesPasajeros() {return self.vagonesDePasajeros().size()}
 	
 	method cantidadUnidades() {return self.cantidadLocomotoras() + self.cantidadVagonesCarga() + self.cantidadVagonesPasajeros()}
+	
+	method pesoVagonesDeCarga() {return self.vagonesDeCarga().sum({vagon=>vagon.peso()})}
+	method pesoVagonesDePasajeros() {return self.vagonesDePasajeros().sum({vagon=>vagon.peso()})}
+	method pesoLocomotoras() {return self.locomotoras().sum({vagon=>vagon.peso()})}
+	
+	method pesoTotal() {return self.pesoVagonesDeCarga() + self.pesoVagonesDePasajeros() + self.pesoLocomotoras()}
+	
+	method esCompleja() {return (self.cantidadUnidades() > 20 or self.pesoTotal() > 10000 )}
 
 }
 
