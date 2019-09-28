@@ -2,7 +2,7 @@ import trenes.*
 
 describe "Trenes" {
 	
-	var formacion
+	var formacion1
 	var formacion2
 	var formacion3
 	var vagonDeCarga1
@@ -28,7 +28,7 @@ describe "Trenes" {
 	fixture {
 		
 		deposito = new Deposito()
-		formacion = new Formacion()
+		formacion1 = new Formacion()
 		formacion2 = new Formacion()
 		formacion3 = new Formacion()
 		vagonDeCarga1 = new VagonDeCarga()
@@ -43,7 +43,7 @@ describe "Trenes" {
 		vagonDePasajeros4 = new VagonDePasajeros()
 		vagonDePasajeros5 = new VagonDePasajeros()
 		vagonDePasajeros6 = new VagonDePasajeros()
-		formacion = new Formacion()
+		formacion1 = new Formacion()
 		locomotora1 = new Locomotora()
 		locomotora2 = new Locomotora()
 		locomotora3 = new Locomotora()
@@ -55,27 +55,27 @@ describe "Trenes" {
 	
 	test "Cuántos vagones livianos hay en una formación" {
 		
-		formacion.vagonesDeCarga().add(vagonDeCarga1)
-		formacion.vagonesDeCarga().add(vagonDeCarga2)
-		formacion.vagonesDeCarga().add(vagonDePasajeros1)
-		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga2)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros2)
 	
 		vagonDePasajeros1.pasajerosTransportados(20)
 		vagonDePasajeros2.pasajerosTransportados(40)
 		vagonDeCarga1.cargaTransportada(2000)
 		vagonDeCarga2.cargaTransportada(2500)
 	
-		assert.equals(2,formacion.vagonesLivianos())
+		assert.equals(2,formacion1.vagonesLivianos())
 	}
 
 	test "Velocidad mínima de una formación" {
 	
 		locomotora1.velocidadMaxima(80) 
 		locomotora2.velocidadMaxima(70)
-		formacion.locomotoras().add(locomotora1)
-		formacion.locomotoras().add(locomotora2)
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.locomotoras().add(locomotora2)
 	
-		assert.equals(70,formacion.velocidadMaxima())
+		assert.equals(70,formacion1.velocidadMaxima())
 	}
 
 	test "Eficiencia" {
@@ -84,19 +84,19 @@ describe "Trenes" {
 		locomotora2.peso(1500)
 		locomotora1.pesoMaximoQueArrastra(5000)
 		locomotora2.pesoMaximoQueArrastra(7500)	
-		formacion.locomotoras().add(locomotora1)
-		formacion.locomotoras().add(locomotora2)	
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.locomotoras().add(locomotora2)	
 	
-		assert.that(formacion.esEficiente())
+		assert.that(formacion1.esEficiente())
 		
 		locomotora1.peso(1000)
 		locomotora2.peso(1500)
 		locomotora1.pesoMaximoQueArrastra(5000)
 		locomotora2.pesoMaximoQueArrastra(5000)
-		formacion.locomotoras().add(locomotora1)
-		formacion.locomotoras().add(locomotora2)
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.locomotoras().add(locomotora2)
 		
-		assert.notThat(formacion.esEficiente())
+		assert.notThat(formacion1.esEficiente())
 	}
 
 	test "Formación puede moverse" {
@@ -105,12 +105,12 @@ describe "Trenes" {
 		locomotora2.peso(1500)
 		locomotora1.pesoMaximoQueArrastra(5000)
 		locomotora2.pesoMaximoQueArrastra(7500)
-		formacion.locomotoras().add(locomotora1)
-		formacion.locomotoras().add(locomotora2)
-		formacion.vagonesDeCarga().add(vagonDeCarga1)
-		formacion.vagonesDeCarga().add(vagonDeCarga2)
-		formacion.vagonesDeCarga().add(vagonDePasajeros1)
-		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.locomotoras().add(locomotora2)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga2)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros2)
 		vagonDeCarga1.cargaMaxima(2000)
 		vagonDeCarga2.cargaMaxima(3000)
 		vagonDePasajeros1.ancho(2)
@@ -122,7 +122,7 @@ describe "Trenes" {
 		
 		//El peso que arrastra la formación es de 22220
 				
-		assert.notThat(formacion.puedeMoverse())
+		assert.notThat(formacion1.puedeMoverse())
 	}
 	
 	test "Cuántos kilos de empuje faltan" {
@@ -131,12 +131,12 @@ describe "Trenes" {
 		locomotora2.peso(1500)
 		locomotora1.pesoMaximoQueArrastra(5000)
 		locomotora2.pesoMaximoQueArrastra(7500)
-		formacion.locomotoras().add(locomotora1)
-		formacion.locomotoras().add(locomotora2)
-		formacion.vagonesDeCarga().add(vagonDeCarga1)
-		formacion.vagonesDeCarga().add(vagonDeCarga2)
-		formacion.vagonesDeCarga().add(vagonDePasajeros1)
-		formacion.vagonesDeCarga().add(vagonDePasajeros2)
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.locomotoras().add(locomotora2)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga2)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros1)
+		formacion1.vagonesDeCarga().add(vagonDePasajeros2)
 		vagonDeCarga1.cargaMaxima(2000)
 		vagonDeCarga2.cargaMaxima(3000)
 		vagonDePasajeros1.ancho(2)
@@ -148,18 +148,18 @@ describe "Trenes" {
 				
 		//El peso que arrastra la formación es de 22220
 		
-		assert.equals(9720,formacion.cuantoEmpujeFalta())
+		assert.equals(9720,formacion1.cuantoEmpujeFalta())
 	}
 	
 	test "Vagones más pesados de cada formación" {
 		
 
 	
-	deposito.formaciones().add(formacion)
+	deposito.formaciones().add(formacion1)
 	deposito.formaciones().add(formacion2)
-	formacion.vagonesDeCarga().add(vagonDeCarga1)
+	formacion1.vagonesDeCarga().add(vagonDeCarga1)
 	formacion2.vagonesDeCarga().add(vagonDeCarga2)
-	formacion.vagonesDePasajeros().add(vagonDePasajeros1)
+	formacion1.vagonesDePasajeros().add(vagonDePasajeros1)
 	formacion2.vagonesDePasajeros().add(vagonDePasajeros2)
 	vagonDeCarga1.cargaTransportada(10000)
 	vagonDeCarga2.cargaTransportada(10000)
@@ -174,11 +174,11 @@ describe "Trenes" {
 
 	test "Se necesita conductor experimentado" {
 		
-		deposito.formaciones().add(formacion)
+		deposito.formaciones().add(formacion1)
 		deposito.formaciones().add(formacion2)
 		deposito.formaciones().add(formacion3)
-		formacion.vagonesDeCarga().add(vagonDeCarga1)
-		formacion.vagonesDeCarga().add(vagonDeCarga2)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga2)
 		vagonDeCarga1.cargaTransportada(7000)
 		vagonDeCarga2.cargaTransportada(5000)
 		
@@ -187,6 +187,41 @@ describe "Trenes" {
 		vagonDeCarga1.cargaTransportada(1000)
 		
 		assert.notThat(deposito.necesitaConductorExperimentado())		
+	}
+	
+	test "Agregar locomotora con empuje" {
+		
+		vagonDeCarga1.cargaMaxima(10000)
+		vagonDeCarga2.cargaMaxima(10000)
+		vagonDeCarga3.cargaMaxima(10000)
+		vagonDeCarga4.cargaMaxima(20000)
+		locomotora1.peso(1000) //Arrastre util = 24000
+		locomotora1.pesoMaximoQueArrastra(25000)
+		locomotora2.peso(1000) //Arrastre util = 24000
+		locomotora2.pesoMaximoQueArrastra(25000)
+		locomotora3.peso(1000) //Arrastre util = 24000
+		locomotora3.pesoMaximoQueArrastra(25000)
+		locomotora4.peso(5000) //Arrastre util = 5000
+		locomotora4.pesoMaximoQueArrastra(10000)
+		formacion1.locomotoras().add(locomotora1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		formacion1.vagonesDeCarga().add(vagonDeCarga2)
+		//Formacion1: 24000 de arrastre útil vs 20320 de peso. 
+		formacion2.locomotoras().add(locomotora2)
+		formacion2.vagonesDeCarga().add(vagonDeCarga3)
+		formacion2.vagonesDeCarga().add(vagonDeCarga4)
+		//Formacion2: 24000 de arrastre útil vs 30320 de peso. Faltan 6320 kilos. 
+		deposito.formaciones().add(formacion1)
+		deposito.formaciones().add(formacion2)
+		deposito.locomotorasSueltas().add(locomotora3) //Alcanza para la formación2.
+		deposito.locomotorasSueltas().add(locomotora4) //No alcanza para la formación2. 
+		
+		deposito.agregarLocomotora(formacion2) //Agrega una locomotora para la formacion2.
+		
+		var locomotorasEnFormacion2 = [locomotora2,locomotora3]
+		
+		assert.equals(0,formacion1.cuantoEmpujeFalta())
+		assert.equals(locomotorasEnFormacion2,formacion2.locomotoras())
 	}
 
 } //Fin describe

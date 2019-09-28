@@ -10,15 +10,16 @@ class Deposito {
 	
 	method agregarLocomotora(formacion) {
 		if (self.cuantoEmpujeFalta(formacion) > 0) {
-			formacion.add(self.locomotoraConEmpuje(formacion))
+			formacion.locomotoras().add(self.locomotoraConEmpuje(formacion))
+		}
+		else {
+		self.error("")
 		}
 	}
 	
 	method locomotoraConEmpuje(formacion) {
 		return locomotorasSueltas.filter({locomotora=>locomotora.arrastreUtil() > formacion.cuantoEmpujeFalta()}).first()
 	}
-	
-	
 }
 
 class Formacion {
