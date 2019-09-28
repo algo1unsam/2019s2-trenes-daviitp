@@ -19,6 +19,10 @@ describe "Trenes" {
 	var vagonDePasajeros6
 	var locomotora1
 	var locomotora2
+	var locomotora3
+	var locomotora4
+	var locomotora5
+	var locomotora6
 	
 	fixture {
 		
@@ -40,6 +44,11 @@ describe "Trenes" {
 		formacion = new Formacion()
 		locomotora1 = new Locomotora()
 		locomotora2 = new Locomotora()
+		locomotora3 = new Locomotora()
+		locomotora4 = new Locomotora()
+		locomotora5 = new Locomotora()
+		locomotora6 = new Locomotora()
+				
 	}
 	
 	test "Cuántos vagones livianos hay en una formación" {
@@ -140,6 +149,30 @@ describe "Trenes" {
 		assert.equals(9720,formacion.cuantoEmpujeFalta())
 	}
 
-	
+	test "Vagon más pesado de cada formacion en deposito"{
+		
+		deposito.formaciones().add(formacion)
+		deposito.formaciones().add(formacion2)
+		formacion.locomotoras().add(locomotora1)
+		formacion.locomotoras().add(locomotora2)
+		formacion2.locomotoras().add(locomotora3)
+		formacion2.locomotoras().add(locomotora4)
+		formacion.vagonesDeCarga().add(vagonDeCarga1)
+		formacion.vagonesDeCarga().add(vagonDeCarga2)
+		formacion2.vagonesDeCarga().add(vagonDeCarga3)
+		formacion2.vagonesDeCarga().add(vagonDeCarga4)
+		locomotora1.peso(1000)
+		locomotora2.peso(1000)
+		locomotora3.peso(1000)
+		locomotora4.peso(1000)
+		vagonDeCarga1.cargaTransportada(1500)
+		vagonDeCarga2.cargaTransportada(2000)
+		vagonDeCarga3.cargaTransportada(1500)
+		vagonDeCarga4.cargaTransportada(3000)
+
+		var formaciones = [vagonDeCarga2,vagonDeCarga3]
+		
+		assert.equals(formaciones,deposito.vagonMasPesado())
+	}
 
 } //Fin describe

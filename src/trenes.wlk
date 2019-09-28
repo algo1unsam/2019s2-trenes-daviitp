@@ -1,4 +1,11 @@
-object deposito {}
+object deposito {
+	
+	const property formaciones = []
+	
+	method vagonMasPesado() {
+		return formaciones.filter({formacion=>formacion.vagonMasPesado()})
+	}
+}
 
 class Formacion {
 	
@@ -8,6 +15,11 @@ class Formacion {
 	
 	method velocidadMaxima() {return locomotoras.min({locomotora=>locomotora.velocidadMaxima()}).velocidadMaxima()}
 	
+	method vagonMasPesadoDeCarga() {return vagonesDeCarga.max({vagon=>vagon.peso()})}
+	method vagonMasPesadoDePasajeros() {return vagonesDeCarga.max({vagon=>vagon.peso()})}
+	
+	method vagonMasPesado() {}
+
 	method vagonesLivianosDeCarga() {return vagonesDeCarga.count({vagon=>vagon.peso() < 2500})}
 	method vagonesLivianosDePasajeros() {return vagonesDePasajeros.count({vagon=>vagon.peso() < 2500})}
 	
@@ -25,6 +37,12 @@ class Formacion {
 	method puedeMoverse() {return self.arrastreUtilTotal() >= self.pesoMaximoVagones()}
 	
 	method cuantoEmpujeFalta() {if (self.puedeMoverse()) return 0 else return (self.pesoMaximoVagones() - self.arrastreUtilTotal())}
+	
+	method cantidadLocomotoras() {return locomotoras.lenght()}
+	method cantidadVagonesCarga() {return vagonesDeCarga.lenght()}
+	method cantidadVagonesPasajeros() {return vagonesDePasajeros.lenght()}
+	
+	method cantidadUnidades() {return self.cantidadLocomotoras() + self.cantidadVagonesCarga() + self.cantidadVagonesPasajeros()}
 
 }
 
