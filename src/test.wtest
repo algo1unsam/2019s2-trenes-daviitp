@@ -223,5 +223,28 @@ describe "Trenes" {
 		assert.equals(0,formacion1.cuantoEmpujeFalta())
 		assert.equals(locomotorasEnFormacion2,formacion2.locomotoras())
 	}
+	
+	test "Formaciones bien armadas según corta/larga distancia" {
+		
+		formacion1.locomotoras().add(locomotora1)
+		locomotora1.peso(1000)
+		locomotora1.pesoMaximoQueArrastra(25000)
+		formacion1.vagonesDePasajeros().add(vagonDePasajeros1)
+		formacion1.vagonesDePasajeros().add(vagonDePasajeros2)
+		formacion1.vagonesDeCarga().add(vagonDeCarga1)
+		vagonDeCarga1.cargaTransportada(1000)
+		vagonDeCarga1.cargaMaxima(5000)
+		vagonDePasajeros1.banios(2)
+		vagonDePasajeros2.banios(2)
+		vagonDePasajeros1.pasajerosTransportados(20)
+		vagonDePasajeros2.pasajerosTransportados(20)
+		vagonDePasajeros1.ancho(3)
+		vagonDePasajeros2.ancho(3)
+		vagonDePasajeros1.largo(10)
+		vagonDePasajeros2.largo(10)		
+
+		assert.that(formacion1.bienArmadaCortaDistancia())
+		assert.that(formacion1.bienArmadaLargaDistancia())
+	}
 
 } //Fin describe

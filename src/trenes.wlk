@@ -27,11 +27,9 @@ class Formacion {
 	const property vagonesDeCarga = []
 	const property vagonesDePasajeros = []
 	const property locomotoras = []	
-
 	
 	method velocidadMaxima() {return locomotoras.min({locomotora=>locomotora.velocidadMaxima()}).velocidadMaxima()}
 	
-	//method vagonMasPesado() {return (vagonesDeCarga + vagonesDePasajeros).max({vagon=>vagon.peso()}).asList()}
 	method vagonesTotales() {return vagonesDeCarga + vagonesDePasajeros}
 	
 	method vagonesLivianosDeCarga() {return vagonesDeCarga.count({vagon=>vagon.peso() < 2500})}
@@ -65,7 +63,14 @@ class Formacion {
 	method pesoTotal() {return self.pesoVagonesDeCarga() + self.pesoVagonesDePasajeros() + self.pesoLocomotoras()}
 	
 	method esCompleja() {return (self.cantidadUnidades() > 20 or self.pesoTotal() > 10000 )}
-
+	
+	method bienArmadaCortaDistancia() {return self.puedeMoverse() and (not(self.esCompleja()))}
+	method bienArmadaLargaDistancia() {return self.puedeMoverse() and self.alcanzanLosBanios()}
+	
+	method pasajerosTransportados() {return vagonesDePasajeros.sum({vagon=>vagon.pasajerosTransportados()})}
+	method cuantosBaniosHay() {return vagonesDePasajeros.sum({vagon=>vagon.banios()})}
+	
+	method alcanzanLosBanios() {return ((self.pasajerosTransportados() / self.cuantosBaniosHay()) <= 50 )}
 }
 
 class VagonDePasajeros {
@@ -73,6 +78,7 @@ class VagonDePasajeros {
 	var property largo
 	var property ancho
 	var property pasajerosTransportados
+	var property banios
 	
 	method pasajerosQuePuedeTransportar() {if (ancho <= 2.5) return largo * 8 else return largo * 10}
 		
